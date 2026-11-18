@@ -15,4 +15,11 @@ metrics:
      threshold: {min: 0.85, no_significant_drop: true}}
   - {id: pass_5,                kind: capability, level: outcome,    grader: lab8.metrics.summarize, threshold: {min: 0.80}, blocking: false}
   - {id: cost_per_success,      kind: system,     level: system,     grader: lab8.metrics.summarize, threshold: {max_increase: 0.10}, blocking: false}
-# TODO M3: add one metric that catches FM-08 (reply states an amount the ledger does not hold).
+  # M3 / FM-08: every amount the reply tells the customer must equal the ledger row for the claim.
+  # A wrong number told to a customer is a money error, so the floor is 1.0 (no tolerated rate).
+  - {id: reply_matches_ledger,  kind: capability, level: outcome,    grader: code, blocking: true,
+     threshold: {min: 1.0, no_significant_drop: true}}
+  # FM-02 / FM-05: the host decides money. A denial the label expects must be in the audit log,
+  # and `resolved` must come with a ledger row. Explains the failures pass_rate alone cannot name.
+  - {id: host_decision_respected, kind: capability, level: outcome,  grader: code, blocking: true,
+     threshold: {min: 0.95, no_significant_drop: true}}
