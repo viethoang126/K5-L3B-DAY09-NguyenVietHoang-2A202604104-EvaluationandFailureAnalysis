@@ -1,0 +1,3 @@
+# eval_set_sha hashes file bytes: keep eval data LF on every OS so CI and local runs agree.
+src/data/** text eol=lf
+src/config/** text eol=lf
